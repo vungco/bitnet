@@ -21,6 +21,7 @@ import { RedisService } from './redis.service';
           host: redisHost,
           port: redisPort,
           password: redisPassword,
+          family: 0,
         });
 
         client.on('connect', () => console.log('Redis connected!'));
