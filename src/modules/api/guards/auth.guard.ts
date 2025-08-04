@@ -5,8 +5,6 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { privateDecrypt } from 'crypto';
-import { Observable } from 'rxjs';
 import { WalletRepository } from 'src/modules/database/repositories/wallet.repository';
 
 @Injectable()
@@ -47,6 +45,11 @@ export class AuthGuard implements CanActivate {
       request.wallet = wallet;
 
       return true;
-    } catch (error) {}
+    } catch (error) {
+      if (error.name === 'TokenExpiredError') {
+        throw new UnauthorizedException('Token has expired');
+      }
+      throw new UnauthorizedException('Invalid token');
+    }
   }
 }

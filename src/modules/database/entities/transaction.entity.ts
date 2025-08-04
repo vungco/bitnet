@@ -20,9 +20,6 @@ export class TransactionEntity {
   blockNumber: string;
 
   @Column()
-  timeStamp: string;
-
-  @Column()
   hash: string;
 
   @Column()
@@ -42,9 +39,6 @@ export class TransactionEntity {
 
   @Column()
   input: string;
-
-  @Column()
-  isError: string;
 
   @Column()
   txreceipt_status: string;

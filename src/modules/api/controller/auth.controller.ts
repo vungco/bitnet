@@ -1,7 +1,6 @@
-import { Body, Controller, Get, Post, Request } from '@nestjs/common';
-import { WalletService } from 'src/modules/database/services/wallet.service';
+import { Body, Controller, Post } from '@nestjs/common';
 import { CreateWalletDto, WalletDto } from '../dtos/wallet.dto';
-import { ApiBody, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from '../services/auth.service';
 
 @ApiTags('auth')
@@ -11,6 +10,9 @@ export class AuthController {
 
   @Post('login')
   @ApiBody({ type: CreateWalletDto })
+  @ApiOperation({ summary: 'login application' })
+  @ApiResponse({ status: 200, description: 'Login successful' })
+  @ApiResponse({ status: 404, description: 'Login fail' })
   async login(@Body() body: CreateWalletDto): Promise<{
     access_token: string;
     items: WalletDto;

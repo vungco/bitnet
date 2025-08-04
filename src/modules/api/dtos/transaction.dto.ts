@@ -49,7 +49,6 @@ export class EstimateGasTokenDto {
 
 export class TransactionDto {
   blockNumber: string;
-  timeStamp: string;
   hash: string;
   from: string;
   to: string;
@@ -57,7 +56,6 @@ export class TransactionDto {
   gasPrice: string;
   gasUsed: string;
   input: string;
-  isError: string;
   txreceipt_status: string;
 }
 
@@ -78,11 +76,6 @@ export class TransactionCreateDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  timeStamp: string;
-
-  @ApiProperty()
-  @IsString()
-  @IsNotEmpty()
   hash: string;
 
   @ApiProperty()
@@ -114,11 +107,6 @@ export class TransactionCreateDto {
   @IsString()
   @IsNotEmpty()
   input: string;
-
-  @ApiProperty()
-  @IsString()
-  @IsNotEmpty()
-  isError: string;
 
   @ApiProperty()
   @IsString()

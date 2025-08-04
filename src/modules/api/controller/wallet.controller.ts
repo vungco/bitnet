@@ -1,21 +1,16 @@
 import {
-  Body,
   Controller,
   Get,
-  Inject,
   Param,
-  Post,
   Query,
   Request,
   UseGuards,
 } from '@nestjs/common';
 import { WalletExternalService } from '../services/walletExternal.service';
 import {
-  CreateWalletDto,
   Erc20TokensResponseDto,
   EthBalanceResponseDto,
   WalletAddressParamDto,
-  WalletDto,
 } from '../dtos/wallet.dto';
 import { RedisService } from 'src/redis/redis.service';
 import { PaginationQueryDto, TransactionDto } from '../dtos/transaction.dto';
@@ -62,7 +57,7 @@ export class WalletController {
       params.address,
     );
 
-    await this.redisService.set(this.cacheKeyToken, tokenRp, 60);
+    await this.redisService.set(this.cacheKeyToken, tokenRp, 1200);
 
     return tokenRp;
   }

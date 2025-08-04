@@ -18,9 +18,9 @@ import { RedisService } from './redis.service';
         const redisPassword = configService.get<string>('REDIS_PASSWORD') || '';
 
         const client = new Redis({
-          host: 'localhost',
-          port: 6379,
-          password: '',
+          host: redisHost,
+          port: redisPort,
+          password: redisPassword,
         });
 
         client.on('connect', () => console.log('Redis connected!'));

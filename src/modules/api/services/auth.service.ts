@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { WalletRepository } from 'src/modules/database/repositories/wallet.repository';
 import { CreateWalletDto } from '../dtos/wallet.dto';
@@ -15,23 +15,23 @@ export class AuthService {
     access_token: string;
     items: WalletEntity;
   }> {
-    let wallet = await this.walletRepository.findOne({
-      where: { address: data.address },
-    });
+    try {
+      let wallet = await this.walletRepository.findOne({
+        where: { address: data.address },
+      });
 
-    if (!wallet) {
-      wallet = await this.walletRepository.create(data);
+      if (!wallet) {
+        wallet = await this.walletRepository.walletCreate(data);
+      }
+      const payload = { sub: wallet.id, address: wallet.address };
+
+      const token = await this.jwtService.signAsync(payload);
+      return {
+        access_token: token,
+        items: wallet,
+      };
+    } catch (error) {
+      throw new InternalServerErrorException('Server error');
     }
-    const payload = { sub: wallet.id, address: wallet.address };
-
-    const token = await this.jwtService.signAsync(payload);
-    return {
-      access_token: token,
-      items: wallet,
-    };
-  }
-
-  async disconnect(): Promise<boolean> {
-    return;
   }
 }
